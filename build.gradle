@@ -47,7 +47,8 @@ ext {
     targetSdkVersion = 28
     supportLibVersion = '1.2.0'
     coreVersion = '1.3.2'
-    recyclerViewVersion = '1.2.0-beta01'
+    recyclerViewVersion = '1.2.0'
+    swipeRefreshVersion = '1.1.0'
     constraintLayoutVersion = '2.0.4'
     materialVersion = '1.3.0'
     lifecycleVersion = '2.3.0'

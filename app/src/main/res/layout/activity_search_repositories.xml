@@ -22,6 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.SearchRepositoriesActivity">
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout"
         android:layout_width="0dp"
@@ -46,18 +47,25 @@
             tools:text="Android"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/listSwipeRefresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingVertical="@dimen/row_item_margin_vertical"
-        android:scrollbars="vertical"
-        app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_layout"
-        tools:ignore="UnusedAttribute"/>
+        app:layout_constraintTop_toBottomOf="@+id/input_layout">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="@dimen/row_item_margin_vertical"
+            android:scrollbars="vertical"
+            app:layoutManager="LinearLayoutManager"
+            tools:ignore="UnusedAttribute"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView android:id="@+id/emptyList"
               android:layout_width="0dp"

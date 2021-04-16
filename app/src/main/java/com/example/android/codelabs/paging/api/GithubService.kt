@@ -24,25 +24,36 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-const val IN_QUALIFIER = "in:name,description"
+
+/**
+ * Created on 16/04/2021
+ * @author André Straube
+ */
+object GithubConfigs {
+    internal const val BASE_URL = "https://api.github.com/"
+    // GitHub page API is 1 based: https://developer.github.com/v3/#pagination
+    const val STARTING_PAGE_INDEX = 1
+    const val IN_QUALIFIER = "in:name,description"
+}
 
 /**
  * Github API communication setup via Retrofit.
  */
 interface GithubService {
     /**
-     * Get repos ordered by stars.
+     * Get repos ordered with default by stars.
+     * https://docs.github.com/en/rest/reference/search#search-repositories
      */
-    @GET("search/repositories?sort=stars")
+    @GET("search/repositories")
     suspend fun searchRepos(
+        @Query("sort") sort: String = "stars", // stars | forks | help-wanted-issues | updated
+        @Query("order") order: String = "desc",
         @Query("q") query: String,
         @Query("page") page: Int,
         @Query("per_page") itemsPerPage: Int
     ): RepoSearchResponse
 
     companion object {
-        private const val BASE_URL = "https://api.github.com/"
-
         fun create(): GithubService {
             val logger = HttpLoggingInterceptor()
             logger.level = Level.BASIC
@@ -50,8 +61,9 @@ interface GithubService {
             val client = OkHttpClient.Builder()
                 .addInterceptor(logger)
                 .build()
+
             return Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(GithubConfigs.BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
